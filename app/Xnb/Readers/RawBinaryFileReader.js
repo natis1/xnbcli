@@ -5,7 +5,6 @@ const UInt32Reader = require('./UInt32Reader');
 const dxt = require('dxt-js');
 const Log = require('../../Log');
 const XnbError = require('../../XnbError');
-const DoubleReader = require('./DoubleReader');
 
 /**
  * Binary file Reader
@@ -19,9 +18,11 @@ class RawBinaryFileReader extends BaseReader {
      * @returns {Object}
      */
     read(buffer) {
-        let data = buffer.read(buffer.length - buffer.bytePosition);
+        let data = buffer.read(buffer.size - buffer.bytePosition);
         // return the data
-        return { export: { type: this.type, data } };
+        return {
+            export: { type: this.type, data }
+        };
     }
 
     /**
@@ -31,8 +32,9 @@ class RawBinaryFileReader extends BaseReader {
      * @param {ReaderResolver}
      */
     write(buffer, content, resolver) {
-        const stringReader = new StringReader();
-        stringReader.write(buffer, content.data, null);
+        // write index of reader
+        this.writeIndex(buffer, resolver);
+        buffer.concat(content.data);
     }
 
 	isValueType() {

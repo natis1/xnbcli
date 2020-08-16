@@ -186,6 +186,12 @@ const resolveImports = filename => {
                     data: exportedFile.toString()
                 }
                 break;
+            // Raw binary
+            case '.bin':
+                json['content'] = {
+                    type: 'RawBinaryFile',
+                    data: exportedFile
+                }
         }   
     }
 
