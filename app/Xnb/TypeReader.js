@@ -103,7 +103,7 @@ const simplifyType = type => {
 
         // unimplemented type catch
         default:
-            throw new XnbError(`Non-implemented type found, cannot resolve type "${simple}", "${type}".`);
+            return 'RawBinaryFile';
     }
 }
 
